@@ -1,0 +1,31 @@
+# Study Hub Backend - Production Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core Flask
+Flask==3.0.0
+Flask-CORS==4.0.0
+Flask-SQLAlchemy==3.1.1
+python-dotenv==1.0.0
+
+# Production WSGI Server
+gunicorn==21.2.0
+
+# JWT Authentication
+PyJWT==2.8.0
+
+# Certificate Generation
+reportlab==4.0.7
+Pillow==10.1.0
+qrcode[pil]==7.4.2
+
+# HTTP Requests (for Intel Manager)
+requests==2.31.0
+
+# RSS Feed Parsing (for Intel Manager)
+feedparser==6.0.10
+
+# AI Integration (Groq)
+groq==0.4.2
+
+# PostgreSQL Driver (for Render production)
+psycopg2-binary==2.9.9

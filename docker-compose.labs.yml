@@ -1,0 +1,196 @@
+# ============================================================
+# Study Hub Lab Environments - Docker Compose
+# Contains all vulnerable lab environments for learning
+# ============================================================
+
+services:
+  # ==================== PRE-SECURITY PATH ====================
+  
+  # Linux Fundamentals Lab
+  linux-fundamentals:
+    image: studyhub/labs:linux-fundamentals-v1
+    build:
+      context: ./labs/linux-fundamentals
+      dockerfile: Dockerfile
+    container_name: lab-linux-fundamentals
+    hostname: linux-lab
+    networks:
+      - lab-network
+    ports:
+      - "2222:22"
+    environment:
+      - LAB_NAME=linux-fundamentals
+      - LAB_DIFFICULTY=easy
+    volumes:
+      - linux-lab-data:/home/user
+    restart: unless-stopped
+    labels:
+      - "studyhub.lab=true"
+      - "studyhub.category=pre-security"
+
+  # Networking 101 Lab
+  networking-101:
+    image: studyhub/labs:networking-101-v1
+    build:
+      context: ./labs/networking-101
+      dockerfile: Dockerfile
+    container_name: lab-networking-101
+    hostname: network-lab
+    networks:
+      - lab-network
+    ports:
+      - "2223:22"
+    environment:
+      - LAB_NAME=networking-101
+      - LAB_DIFFICULTY=easy
+    restart: unless-stopped
+    labels:
+      - "studyhub.lab=true"
+      - "studyhub.category=pre-security"
+
+  # ==================== WEB HACKING PATH ====================
+  
+  # SQL Injection Bakery Lab
+  sqli-bakery:
+    image: studyhub/labs:sqli-bakery-v1
+    build:
+      context: ./labs/sqli-bakery
+      dockerfile: Dockerfile
+    container_name: lab-sqli-bakery
+    hostname: bakery-web
+    networks:
+      - lab-network
+    ports:
+      - "8081:80"
+    environment:
+      - LAB_NAME=sql-injection-bakery
+      - LAB_DIFFICULTY=easy
+      - MYSQL_HOST=sqli-bakery-db
+      - MYSQL_DATABASE=bakery
+      - MYSQL_USER=bakery_user
+      - MYSQL_PASSWORD=bakery_pass_insecure
+    depends_on:
+      - sqli-bakery-db
+    restart: unless-stopped
+    labels:
+      - "studyhub.lab=true"
+      - "studyhub.category=web-hacking"
+
+  sqli-bakery-db:
+    image: mysql:8.0
+    container_name: lab-sqli-bakery-db
+    hostname: bakery-db
+    networks:
+      - lab-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_insecure
+      - MYSQL_DATABASE=bakery
+      - MYSQL_USER=bakery_user
+      - MYSQL_PASSWORD=bakery_pass_insecure
+    volumes:
+      - sqli-bakery-data:/var/lib/mysql
+      - ./labs/sqli-bakery/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    labels:
+      - "studyhub.lab=true"
+      - "studyhub.type=database"
+
+  # Burp Suite Practice Lab
+  burp-practice:
+    image: studyhub/labs:burp-practice-v1
+    build:
+      context: ./labs/burp-practice
+      dockerfile: Dockerfile
+    container_name: lab-burp-practice
+    hostname: burp-web
+    networks:
+      - lab-network
+    ports:
+      - "8082:80"
+    environment:
+      - LAB_NAME=burp-suite-blackbox
+      - LAB_DIFFICULTY=medium
+    restart: unless-stopped
+    labels:
+      - "studyhub.lab=true"
+      - "studyhub.category=web-hacking"
+
+  # Privilege Escalation Lab
+  privesc-linux:
+    image: studyhub/labs:privesc-linux-v1
+    build:
+      context: ./labs/privesc-linux
+      dockerfile: Dockerfile
+    container_name: lab-privesc-linux
+    hostname: privesc-box
+    networks:
+      - lab-network
+    ports:
+      - "2224:22"
+    privileged: true
+    environment:
+      - LAB_NAME=privilege-escalation
+      - LAB_DIFFICULTY=medium
+    restart: unless-stopped
+    labels:
+      - "studyhub.lab=true"
+      - "studyhub.category=web-hacking"
+
+  # ==================== CTF CHALLENGES ====================
+  
+  # Mr. Robot CTF Box
+  ctf-mr-robot:
+    image: studyhub/ctf:mr-robot-v1
+    build:
+      context: ./labs/ctf-mr-robot
+      dockerfile: Dockerfile
+    container_name: ctf-mr-robot
+    hostname: mrrobot
+    networks:
+      - lab-network
+    ports:
+      - "8083:80"
+      - "2225:22"
+    environment:
+      - CTF_NAME=mr-robot
+      - CTF_DIFFICULTY=easy
+    restart: unless-stopped
+    labels:
+      - "studyhub.lab=true"
+      - "studyhub.category=ctf"
+
+  # Eternal Blue CTF Box (Windows simulation)
+  ctf-eternal-blue:
+    image: studyhub/ctf:eternal-blue-v1
+    build:
+      context: ./labs/ctf-eternal-blue
+      dockerfile: Dockerfile
+    container_name: ctf-eternal-blue
+    hostname: win7-vulnerable
+    networks:
+      - lab-network
+    ports:
+      - "4455:445"
+      - "1399:139"
+    environment:
+      - CTF_NAME=eternal-blue
+      - CTF_DIFFICULTY=medium
+    restart: unless-stopped
+    labels:
+      - "studyhub.lab=true"
+      - "studyhub.category=ctf"
+
+# ==================== NETWORKS ====================
+networks:
+  lab-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.10.0/24
+          gateway: 10.10.10.1
+
+# ==================== VOLUMES ====================
+volumes:
+  linux-lab-data:
+  sqli-bakery-data:
